@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>เลขเด็ดงวดนี้ By ลุงนอต</title>
+    <style>
+        body {
+            background: linear-gradient(135deg, lightblue, lightgray);
+            font-family: Arial, sans-serif;
+        }
+        h1 {
+            color: blue;
+            text-align: center;
+        }
+        p {
+            background-color: white;
+            color: black;
+            padding: 10px;
+            border-radius: 5px;
+        }
+        button {
+            background-color: green;
+            color: white;
+            padding: 10px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            margin: 5px;
+        }
+        input {
+            padding: 5px;
+            border-radius: 5px;
+            border: 1px solid gray;
+        }
+        #result {
+            font-size: 24px;
+            font-weight: bold;
+            color: red;
+        }
+        #checkResult {
+            color: green;
+        }
+    </style>
+    <script>
+        function generateNumbers() {
+            var numbers = [];
+            while (numbers.length < 6) {
+                var rand = Math.floor(Math.random() * 99) + 1;
+                if (numbers.indexOf(rand) === -1) numbers.push(rand);
+            }
+            numbers.sort(function (a, b) { return a - b });
+            document.getElementById("result").innerHTML = numbers.join(" ");
+        }
+        function checkNumbers() {
+            var input = document.getElementById("input").value;
+            var numbers = input.split(",");
+            for (var i = 0; i < numbers.length; i++) {
+                numbers[i] = parseInt(numbers[i]);
+            }
+            numbers.sort(function (a, b) { return a - b });
+            var result = [];
+            var generatedNumbers = document.getElementById("result").innerHTML.split(" ");
+            for (var i = 0; i < numbers.length; i++) {
+                if (generatedNumbers.indexOf(numbers[i].toString()) !== -1) result.push(numbers[i]);
+            }
+            if (result.length > 0) {
+                document.getElementById("checkResult").innerHTML = "เลขที่ตรงกัน: " + result.join(", ");
+            } else {
+                document.getElementById("checkResult").innerHTML = "ไม่มีเลขที่ตรงกัน";
+            }
+        }
+        function reset() {
+            document.getElementById("result").innerHTML = "";
+            document.getElementById("input").value = "";
+            document.getElementById("checkResult").innerHTML = "";
+        }
+    </script>
+</head>
+<body>
+    <h1>เลขเด็ดงวดนี้ By ลุงนอต</h1>
+    <p>คลิกปุ่มเพื่อสร้างตัวเลขสุ่ม 6 ตัวระหว่าง 1 ถึง 99:</p>
+    <button onclick="generateNumbers()">สุ่มเลข</button>
+    <p id="result"></p>
+    <p>กรอกเลขที่ต้องการเช็ค (คั่นด้วยเครื่องหมาย comma):</p>
+    <input type="text" id="input">
+    <button onclick="checkNumbers()">เช็ค</button>
+    <button onclick="reset()">รีเซ็ต</button>
+    <p id="checkResult"></p>
+</body>
+</html>
